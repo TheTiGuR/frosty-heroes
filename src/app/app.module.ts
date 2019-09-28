@@ -1,13 +1,26 @@
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HelloComponent } from './hello.component';
+import { SharedModule } from './shared/shared.module';
+
+const routes: Route[] = [
+    {
+        path: '',
+        loadChildren: './herolist/herolist.module#HerolistModule',
+    },
+    {
+        path: 'hero',
+        loadChildren: './herodetail/herodetail.module#HerodetailModule',
+    },
+];
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule ],
-  declarations: [ AppComponent, HelloComponent ],
-  bootstrap:    [ AppComponent ]
+    declarations: [AppComponent],
+    imports: [BrowserModule, SharedModule, HttpClientModule, RouterModule.forRoot(routes)],
+    providers: [],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
